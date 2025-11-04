@@ -10,6 +10,7 @@ def flatten(sequence):
 
 	return result
 
+
 assert flatten([1,(2,3),[],[4,(5,6,7)],8,[9]]) == [1, 2, 3, 4, 5, 6, 7, 8, 9]
 assert flatten([1,(23,3),[],[4,()]]) == [1, 23, 3, 4]
 print("TESTS PASSED")
