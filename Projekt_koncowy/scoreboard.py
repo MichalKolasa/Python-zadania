@@ -6,6 +6,8 @@ class Scoreboard:
 	"""Klasa przeznaczona do przedstawiania informacji o punktacji."""
 
 	def __init__(self, invasion_game):
+		"""Inicjalizacja punktacji."""
+
 		self.invasion_game = invasion_game
 		self.screen = invasion_game.screen
 		self.screen_rect = invasion_game.screen.get_rect()
@@ -21,7 +23,8 @@ class Scoreboard:
 		self.prep_ships()
 
 	def prep_score(self):
-		# Przekształcenie punktacji na wygenerowany obraz
+		"""Przekształca punktację na wygenerowany obraz."""
+
 		score_str = str(self.stats.score)
 		self.score_image = self.font.render(score_str, True,
 											self.text_color, None)
@@ -32,7 +35,8 @@ class Scoreboard:
 		self.score_rect.top = 20
 
 	def prep_high_score(self):
-		# Przekształcenie najlepszego wyniku na wygenerowany obraz
+		"""Przekształca najlepszy wynik na wygenerowany obraz."""
+
 		high_score_str = str(self.stats.high_score)
 		self.high_score_image = self.font.render(high_score_str, True,
 												 self.text_color, None)
@@ -43,7 +47,8 @@ class Scoreboard:
 		self.high_score_rect.top = self.score_rect.top
 
 	def prep_level(self):
-		# Przekształcenie numeru poziomu na wygenerowany obraz
+		"""Przekształca numer poziomu na wygenerowany obraz."""
+
 		level_str = str(self.stats.level)
 		self.level_image = self.font.render(level_str, True,
 		self.text_color, None)
@@ -54,13 +59,15 @@ class Scoreboard:
 		self.level_rect.top = self.score_rect.bottom + 10
 
 	def check_high_score(self):
-		# Sprawdzenie, czy mamy nowy najlepszy wynik osiągnięty dotąd w grze
+		"""Sprawdza, czy mamy nowy najlepszy wynik osiągnięty dotąd w grze."""
+
 		if self.stats.score > self.stats.high_score:
 			self.stats.high_score = self.stats.score
 			self.prep_high_score()
 
 	def prep_ships(self):
-		# Wyświetla liczbę staków, jakie pozostały graczowi
+		"""Wyświetla liczbę statków, jakie pozostały graczowi."""
+
 		self.ships = Group()
 		for ship_number in range(self.stats.ships_left):
 			ship = Ship(self.invasion_game)
@@ -69,7 +76,8 @@ class Scoreboard:
 			self.ships.add(ship)
 
 	def show_score(self):
-		# Wyświetlenie punktacji na ekranie
+		"""Wyświetla punktacje na ekranie."""
+
 		self.screen.blit(self.score_image, self.score_rect)
 		self.screen.blit(self.high_score_image, self.high_score_rect)
 		self.screen.blit(self.level_image, self.level_rect)

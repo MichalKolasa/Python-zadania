@@ -2,6 +2,11 @@ class Settings:
 	"""Klasa przechowująca ustawienia gry."""
 
 	def __init__(self):
+		"""Inicjalizacja ustawień wstępnych.
+
+		Ustawienia wstępne: ekranu, statku, pocisku, obcego, szybkości
+		rozgrywki oraz dźwięku."""
+
 		# Ustawienia ekranu
 		self.screen_width = 1200
 		self.screen_height = 800
@@ -9,13 +14,14 @@ class Settings:
 
 		# Ustawienia statku
 		self.ship_limit = 3
-		self.ship_speed = 4.5
+		self.ship_speed = 7.5
 
 		# Ustawienia pocisku
-		self.bullet_width = 600
-		self.bullet_height = 20
+		self.bullet_width = 10
+		self.bullet_height = 30
 		self.bullet_color = (60, 60, 60)
 		self.bullets_allowed = 3
+		self.bullet_speed = 6.5
 
 		# Ustawienia obcego
 		self.fleet_drop_speed = 10
@@ -30,9 +36,8 @@ class Settings:
 		self.explosion_volume = 1
 
 	def initialize_dynamic_settings(self):
-		# Inicjalizacja ustawień, ulegających zmianom w trakcie gry
-		#self.ship_speed = 1.5
-		self.bullet_speed = 2.5
+		"""Inicjalizacja ustawień, ulegających zmianom w trakcie gry."""
+
 		self.alien_speed = 1.0
 
 		self.fleet_direction = 1
@@ -40,7 +45,6 @@ class Settings:
 		self.alien_points = 1
 
 	def increase_speed(self):
-		# Zmiana ustawień dotyczących szybkości
-		#self.ship_speed *= self.speedup_scale
-		self.bullet_speed *= self.speedup_scale
+		"""Zmiana ustawień dotyczących szybkości."""
+
 		self.alien_speed *= self.speedup_scale

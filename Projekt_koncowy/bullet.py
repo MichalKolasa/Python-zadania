@@ -6,7 +6,8 @@ class Bullet(Sprite):
 	"""Klasa do zarządzania pociskami wystrzeliwanymi przez statek."""
 
 	def __init__(self, invasion_game):
-		# Utworzenie pocisku w aktualnym położeniu statku
+		"""Utworzenie pocisku w aktualnym położeniu statku."""
+
 		super().__init__()
 		self.screen = invasion_game.screen
 		self.settings = invasion_game.settings
@@ -21,10 +22,12 @@ class Bullet(Sprite):
 		self.y = float(self.rect.y)
 
 	def update(self):
-		# Poruszanie pociskiem po ekranie
+		"""Porusza pociskiem po ekranie."""
+
 		self.y -= self.settings.bullet_speed
 		self.rect.y = self.y
 
 	def draw_bullet(self):
-		# Wyświetlenie pocisku na ekranie
+		"""Wyświetla pocisk na ekranie."""
+
 		pygame.draw.rect(self.screen, self.color, self.rect)

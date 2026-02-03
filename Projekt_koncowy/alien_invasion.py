@@ -14,6 +14,16 @@ class AlienInvasion:
     """Klasa do zarządzania zasobami i sposobem działania gry."""
 
     def __init__(self):
+        """Inicjalizacja gry.
+
+        Inicjalizuje:
+        - tło,
+        - statek gracza,
+        - flotę obcych,
+        - wskaźniki statystyk,
+        - dźwięki gry.
+        """
+
         pygame.init()
         pygame.mixer.init()
         self.clock = pygame.time.Clock()
@@ -49,7 +59,8 @@ class AlienInvasion:
 
 
     def run_game(self):
-        # Główna pętla gry
+        """Główna pętla gry."""
+
         while True:
             self._check_events()
 
@@ -62,7 +73,8 @@ class AlienInvasion:
             self.clock.tick(60)
 
     def _check_events(self):
-        # Reakcja na zdarzenia generowane przez klawiaturę i mysz
+        """Reakcja na zdarzenia generowane przez klawiaturę i mysz."""
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -75,6 +87,8 @@ class AlienInvasion:
                 self._check_play_button(mouse_pos)
 
     def _check_play_button(self, mouse_pos):
+        """Obsługa przycisku "Graj"."""
+
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
 
         if button_clicked and not self.game_active:
@@ -98,6 +112,8 @@ class AlienInvasion:
             pygame.mouse.set_visible(False)
 
     def _check_keydown_events(self, event):
+        """Obsługa wcisniętych klawiszy K_RIGHT, K_LEFT i SPACE."""
+
         if event.key == pygame.K_RIGHT:
             # przesuwamy statek w prawo
             self.ship.moving_right = True
@@ -108,20 +124,24 @@ class AlienInvasion:
             self._fire_bullet()
 
     def _check_keyup_events(self, event):
+        """Obsługa zwolnionych klawiszy K_RIGHT, K_LEFT"""
+
         if event.key == pygame.K_RIGHT:
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
 
     def _fire_bullet(self):
-        # Utworzenie nowego pocisku i dodanie go do grupy pocisków.
+        """Tworzy nowy pocisk i dodaje go do grupy pocisków."""
+
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
             self.shoot_sound.play()
 
     def _update_bullets(self):
-        # Uaktualnienie położenia pocisków i usuniecię niewidocznych.
+        """Uaktualnia położenia pocisków i usuwa niewidoczne."""
+
         self.bullets.update()
 
         for bullet in self.bullets.copy():
@@ -131,7 +151,7 @@ class AlienInvasion:
         self._check_bullet_alien_collisions()
 
     def _check_bullet_alien_collisions(self):
-        # Reakcja na kolizję między pociskiem i obcym
+        """Reakcja na kolizję między pociskiem i obcym"""
 
         # Sprawdzenie, czy jakiś pocisk trafił obcego. Jeśli tak usuwamy go wraz
         # z pociskiem.
@@ -156,7 +176,8 @@ class AlienInvasion:
             self.sb.prep_level()
 
     def _create_fleet(self):
-        # Utworzenie pełnej floty obcych
+        """Tworzy pełną flotę obcych"""
+
         alien = Alien(self)
         alien_width, alien_height = alien.rect.size
 
@@ -171,6 +192,11 @@ class AlienInvasion:
             current_y += 2 * alien_height
 
     def _update_aliens(self):
+        """Aktualizuje położenie wszystkich obcych we flocie.
+
+        Wykrywa kolizję między obcym i statkiem.
+        Sprawdza, czy jakiś obcy dotarł do dolnej krawędzi ekranu."""
+
         # Położenie wszytkich obcych we flocie
         self._check_fleet_edges()
         self.aliens.update()
@@ -184,7 +210,8 @@ class AlienInvasion:
 
 
     def _create_alien(self, x_position, y_position):
-        # Utworzenie obcego i umieszczenie go w rzędzie
+        """Tworzy obcego i umieszcza go w rzędzie"""
+
         new_alien = Alien(self)
         new_alien.x = x_position
         new_alien.rect.x = x_position
@@ -192,19 +219,25 @@ class AlienInvasion:
         self.aliens.add(new_alien)
 
     def _check_fleet_edges(self):
+        """Zmienia kierunek floty, gdy ta dojdzie do końca ekranu."""
+
         for alien in self.aliens.sprites():
             if alien.check_edges():
                 self._change_fleet_direction()
                 break
 
     def _change_fleet_direction(self):
-        # przesunięcie floty w dół i zmiana kierunku na przeciwny
+        """Przesuwa flotę w dół i zmienia jej kierunek na przeciwny"""
+
         for alien in self.aliens.sprites():
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
 
     def _ship_hit(self):
-        # Reakcja na uderzenie obcego w statek
+        """Reakcja na uderzenie obcego w statek.
+
+        Zmniejsza ilość pozostałych statków i resetuje poziom."""
+
         if self.stats.ships_left > 0:
             self.stats.ships_left -= 1
             self.sb.prep_ships()
@@ -223,14 +256,16 @@ class AlienInvasion:
             pygame.mouse.set_visible(True)
 
     def _check_aliens_bottom(self):
-        # Sprawdzanie czy jakikolwiek obcy dotarł do dolnej krawędzi ekranu
+        """Sprawdzan, czy jakikolwiek obcy dotarł do dolnej krawędzi ekranu"""
+
         for alien in self.aliens.sprites():
             if alien.rect.bottom >= self.settings.screen_height:
                 self._ship_hit()
                 break
 
     def _update_screen(self):
-        # Uaktualnienie elementów na ekranie i przejście do nowego ekranu
+        """Uaktualnia elementy na ekranie i przechodzi do nowego ekranu"""
+
         self.screen.blit(self.bg_image, (0, 0))
 
         for bullet in self.bullets.sprites():
