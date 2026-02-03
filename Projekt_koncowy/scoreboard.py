@@ -24,7 +24,7 @@ class Scoreboard:
 		# Przekształcenie punktacji na wygenerowany obraz
 		score_str = str(self.stats.score)
 		self.score_image = self.font.render(score_str, True,
-											self.text_color, self.settings.bg_color)
+											self.text_color, None)
 
 		# Wyświetlenie punktacji w prawym górnym rogu
 		self.score_rect = self.score_image.get_rect()
@@ -35,7 +35,7 @@ class Scoreboard:
 		# Przekształcenie najlepszego wyniku na wygenerowany obraz
 		high_score_str = str(self.stats.high_score)
 		self.high_score_image = self.font.render(high_score_str, True,
-												 self.text_color, self.settings.bg_color)
+												 self.text_color, None)
 
 		# Wyświetlenie najlepszego wyniku w grze
 		self.high_score_rect = self.high_score_image.get_rect()
@@ -46,7 +46,7 @@ class Scoreboard:
 		# Przekształcenie numeru poziomu na wygenerowany obraz
 		level_str = str(self.stats.level)
 		self.level_image = self.font.render(level_str, True,
-		self.text_color, self.settings.bg_color)
+		self.text_color, None)
 
 		# Numer poziomu jest wyświetlany pod aktualną punktacją.
 		self.level_rect = self.level_image.get_rect()

@@ -21,6 +21,12 @@ class AlienInvasion:
 			(self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
 
+        self.bg_image = pygame.image.load('images/image4.png').convert()
+        self.bg_image = pygame.transform.scale(
+            self.bg_image,
+            (self.settings.screen_width, self.settings.screen_height)
+        )
+
         # Utworzenie egzemplarza przechowującego statystyki gry
         self.stats = GameStats(self)
         self.sb = Scoreboard(self)
@@ -216,7 +222,7 @@ class AlienInvasion:
 
     def _update_screen(self):
         # Uaktualnienie elementów na ekranie i przejście do nowego ekranu
-        self.screen.fill(self.settings.bg_color)
+        self.screen.blit(self.bg_image, (0, 0))
 
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
