@@ -34,7 +34,7 @@ class Triangle:
 		x2, y2 = self.pt2.x, self.pt2.y
 		x3, y3 = self.pt3.x, self.pt3.y
 
-		return Point(round((x1 + x2 + x3) / 3, 3), round((y1 + y2 + y3) / 3, 3))
+		return Point(round((x1 + x2 + x3) / 3, 3), round((y1 + y2 + y3) / 3, 3    ))
 
 	# pole powierzchni
 	def area(self):
