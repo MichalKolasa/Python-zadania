@@ -25,6 +25,10 @@ class Settings:
 
 		self.initialize_dynamic_settings()
 
+		# Ustawienia dźwięków
+		self.shoot_volume = 0.5
+		self.explosion_volume = 1
+
 	def initialize_dynamic_settings(self):
 		# Inicjalizacja ustawień, ulegających zmianom w trakcie gry
 		#self.ship_speed = 1.5

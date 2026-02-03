@@ -15,6 +15,7 @@ class AlienInvasion:
 
     def __init__(self):
         pygame.init()
+        pygame.mixer.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings()
         self.screen = pygame.display.set_mode(
@@ -37,9 +38,15 @@ class AlienInvasion:
 
         self._create_fleet()
 
+        self.play_button = Button(self, "Graj")
+
+        self.shoot_sound = pygame.mixer.Sound('sounds/shoot.wav')
+        self.explosion_sound = pygame.mixer.Sound('sounds/explosion.wav')
+        self.shoot_sound.set_volume(self.settings.shoot_volume)
+        self.explosion_sound.set_volume(self.settings.explosion_volume)
+
         self.game_active = False
 
-        self.play_button = Button(self, "Graj")
 
     def run_game(self):
         # Główna pętla gry
@@ -111,6 +118,7 @@ class AlienInvasion:
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
+            self.shoot_sound.play()
 
     def _update_bullets(self):
         # Uaktualnienie położenia pocisków i usuniecię niewidocznych.
@@ -131,6 +139,7 @@ class AlienInvasion:
             self.bullets, self.aliens, True, True)
 
         if collisions:
+            self.explosion_sound.play()
             for aliens in collisions.values():
                 self.stats.score += self.settings.alien_points * len(aliens)
             self.sb.prep_score()
